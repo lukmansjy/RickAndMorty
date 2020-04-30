@@ -1,35 +1,25 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet} from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native'
 
-const Card = ({data})=>{
+import ItemRow from './ItemRow'
+
+const Card = ({data, onPress})=>{
     return(
-        <View style={styles.cardWrapper}>
-            <Image source={{ uri: data.image }} alt="Poster" style={styles.imgCard}/>
-            <View style={styles.containerDetailCard}>
-                <Text style={styles.txtName}>{data.name}</Text>
-                <View style={styles.wrapperRow}>
-                    <View style={styles.containerRow}>
-                        <Text style={styles.txtLabel}>Status</Text>
-                        <Text style={styles.txtValue}>{data.status}</Text>
-                    </View>
-                    <View style={styles.containerRow}>
-                        <Text style={styles.txtLabel}>Species</Text>
-                        <Text style={styles.txtValue}>{data.species}</Text>
-                    </View>
-                </View>
+        <TouchableOpacity onPress={()=>onPress(data)}>
+            <View style={styles.cardWrapper}>
+                <Image source={{ uri: data.image }} alt="Poster" style={styles.imgCard}/>
+                <View style={styles.containerDetailCard}>
+                    <Text style={styles.txtName}>{data.name}</Text>
 
-                <View style={styles.wrapperRow}>
-                    <View style={styles.containerRow}>
-                        <Text style={styles.txtLabel}>Gender</Text>
-                        <Text style={styles.txtValue}>{data.gender}</Text>
-                    </View>
-                    <View style={styles.containerRow}>
-                    </View>
-                </View>
+                    <ItemRow label={{left: 'Status', right: 'Species'}}
+                            value={{left: data.status, right: data.species}}/>
+                    <ItemRow label={{left: 'Gender', right: ''}}
+                            value={{left: data.gender, right: ''}}/>
 
-                <Text style={styles.txtDetail}>Origin {data.origin.name}, Location {data.location.name}.</Text>
+                    <Text style={styles.txtDetail}>Origin {data.origin.name}, Location {data.location.name}.</Text>
+                </View>
             </View>
-      </View>
+        </TouchableOpacity>
     )
 }
 
@@ -78,25 +68,6 @@ const styles = StyleSheet.create({
         borderBottomColor: '#898989',
         borderBottomWidth: .7,
         paddingBottom: 2
-    },
-    wrapperRow: {
-        flexDirection: 'row'
-    },
-    containerRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        flex: 1,
-        marginRight: 24,
-        marginBottom: 4
-    },
-    txtLabel: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#424242'
-    },
-    txtValue: {
-        fontSize: 16,
-        color: '#424242'
     },
     txtDetail: {
         fontSize: 16,

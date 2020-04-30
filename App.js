@@ -12,7 +12,7 @@ const App = ()=>{
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="HomePage" component={HomePage} options={{ title: 'Rick and Morty' }}/>
-        <Stack.Screen name="DetailPage" component={DetailPage} />
+        <Stack.Screen name="DetailPage" component={DetailPage} options={({ route }) => ({ title: route.params.data.name })}/>
       </Stack.Navigator>
     </NavigationContainer>
   )

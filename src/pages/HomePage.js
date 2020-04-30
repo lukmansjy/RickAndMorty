@@ -4,7 +4,7 @@ import { View, FlatList } from 'react-native'
 import axios from 'axios'
 import Card from '../components/Card'
 
-const HomePage = () => {
+const HomePage = ({navigation}) => {
 
   const [state, setState] = useState({
     data: null
@@ -18,7 +18,6 @@ const HomePage = () => {
         }
       }).then( res => {
         setState({
-          ...axios,
           data: res.data.results
         })
       }).catch( err => {
@@ -29,12 +28,16 @@ const HomePage = () => {
     }
   })
 
+  const toDetail = data =>{
+    navigation.navigate('DetailPage',{data: data})
+  }
+
   return (
     <View>
       <FlatList 
         data={state.data}
         renderItem={
-            ({item, index}) => <Card data={item} index={index} key={item.id}/>
+            ({item, index}) => <Card data={item} index={index} key={item.id} onPress={data => toDetail(data)}/>
         }
         keyExtractor= { (item, index) => index.toString() }/>
     </View>
