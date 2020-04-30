@@ -11,7 +11,7 @@ const App = ()=>{
   return(
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="HomePage" component={HomePage} options={{ title: 'Rick and Morty'}}/>
+        <Stack.Screen name="HomePage" component={HomePage} options={{ title: 'Rick and Morty' }}/>
         <Stack.Screen name="DetailPage" component={DetailPage} />
       </Stack.Navigator>
     </NavigationContainer>

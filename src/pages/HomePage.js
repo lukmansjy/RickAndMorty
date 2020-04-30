@@ -1,14 +1,42 @@
-import React from 'react'
-import { View, Text, Button } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, FlatList } from 'react-native'
 
-const HomePage = ({ navigation }) => {
+import axios from 'axios'
+import Card from '../components/Card'
+
+const HomePage = () => {
+
+  const [state, setState] = useState({
+    data: null
+  })
+
+  useEffect(()=>{
+    if(!state.data){
+      axios.get('https://rickandmortyapi.com/api/character', {
+        params: {
+          page: 1
+        }
+      }).then( res => {
+        setState({
+          ...axios,
+          data: res.data.results
+        })
+      }).catch( err => {
+        console.log(err)
+        alert('Ambil data bermasalah, pastikan internet aktif')
+      })
+      
+    }
+  })
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('DetailPage')}
-      />
+    <View>
+      <FlatList 
+        data={state.data}
+        renderItem={
+            ({item, index}) => <Card data={item} index={index} key={item.id}/>
+        }
+        keyExtractor= { (item, index) => index.toString() }/>
     </View>
   );
 }
